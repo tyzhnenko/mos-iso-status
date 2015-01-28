@@ -26,7 +26,7 @@ for release in FUEL_RELEASES:
 
     if fjob_name not in OLD_RESULTS:
         OLD_RESULTS[fjob_name] = {}
-    if 'builds' not in OLS_RESULTS[fjob_name]:
+    if 'builds' not in OLD_RESULTS[fjob_name]:
         OLD_RESULTS[fjob_name]['builds'] = []
     RESULTS[fjob_name] = {}
     RESULTS[fjob_name]['builds'] = []
