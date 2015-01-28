@@ -1,0 +1,71 @@
+{% block body %}
+
+<style>
+ table, td, th {
+    border: 1px solid black;
+    font-size: small
+ }
+ th {
+    background-color: #D0D0D0;
+    color: black;
+    padding: 1px;
+ }
+</style>
+
+<table>
+ <thead>
+  <tr>
+   <th>Image #</th>
+   <th>Build Date</th>
+   <th>Build Status</th>
+     {% for test_type in tests_types %}
+       <th> {{ test_type }} </th>
+     {% endfor %}
+   <th>Image Links</th>
+  </tr>
+ </thead>
+ <tbody>
+  {% for image in images %}
+      <tr class="mos_images_status">
+        <td> <center> {{ image.get('build_number', '') }} </center> </td>
+        <td>{{ image.get('date', '') }}</td>
+        <td> <b> <center>
+        {% if image.get('build_status', '') == 'SUCCESS' %}
+           <font color="green"> PASS
+        {% elif image.get('build_status', '') == 'IN PROGRESS' %}
+           <font color="orange"> IN PROGRESS
+        {% else %}
+           <font color="red">
+             {% if image.get('build_status', '') == 'FAILURE' %}
+               FAIL
+             {% else %}
+               {{ image.get('build_status', '') }}
+             {% endif %}
+        {% endif %}
+        </font> </center> </b> </td>
+        {% for test in tests_types %}
+          <td> <b> <center>
+          {% if image.get('tests', {}).get(test.replace('.', '_'), '') == 'SUCCESS' %}
+            <font color="green">PASS
+          {% elif image.get('tests', {}).get(test.replace('.', '_'), '') == 'IN PROGRESS' %}
+            <font color="orange">IN PROGRESS
+          {% else %}
+            <font color="red">
+              {% if image.get('tests', {}).get(test.replace('.', '_'), '') == 'FAILURE' %}
+                FAIL
+              {% else %}
+                {{ image.get('tests', {}).get(test.replace('.', '_'), '') }}
+              {% endif %}
+          {% endif %}
+          </font> </center> </b> </td>
+        {% endfor %}
+        <td>
+          <a href="{{ image.get('iso_link', '') }}">ISO</a> &nbsp;
+          <a href="{{ image.get('torrent_link', '') }}">Torrent</a>
+        </td>
+      </tr>
+  {% endfor %}
+ </tbody>
+</table>
+
+{% endblock %}
