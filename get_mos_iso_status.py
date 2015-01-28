@@ -11,18 +11,25 @@ N = 10  # script will update only last N+1 results
 jenkins = Jenkins(FUEL_URL, username=None, password=None)
 connection = pymongo.Connection()                                               
 mos = connection['MOS']
-OLD_RESULTS = list(mos.images.find())[0]
+
+images = list(mos.images.find())
+if len(images) > 0:
+    OLD_RESULTS = images[0]
+
 RESULTS = {}
+
 
 for release in FUEL_RELEASES:
     job_name = '{0}.all'.format(release)
     fjob_name = job_name.replace('.', '_')
     jenkins_job = jenkins[job_name]
 
-    if fjob_name not in RESULTS:
-        RESULTS[fjob_name] = {}
-    if 'builds' not in RESULTS[fjob_name]:
-        RESULTS[fjob_name]['builds'] = []
+    if fjob_name not in OLD_RESULTS:
+        OLD_RESULTS[fjob_name] = {}
+    if 'builds' not in OLS_RESULTS[fjob_name]:
+        OLD_RESULTS[fjob_name]['builds'] = []
+    RESULTS[fjob_name] = {}
+    RESULTS[fjob_name]['builds'] = []
 
     RESULTS[fjob_name]['test_groups'] = jenkins_job.get_downstream_job_names()
 
