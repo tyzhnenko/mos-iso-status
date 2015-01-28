@@ -19,7 +19,9 @@
    <th>Build Date</th>
    <th>Build Status</th>
      {% for test_type in tests_types %}
-       <th> {{ test_type }} </th>
+         {% if 'cachers' not in test_type %}
+             <th> {{ test_type }} </th>
+         {% endif %}
      {% endfor %}
    <th>Image Links</th>
   </tr>
@@ -44,20 +46,22 @@
         {% endif %}
         </font> </center> </b> </td>
         {% for test in tests_types %}
-          <td> <b> <center>
-          {% if image.get('tests', {}).get(test.replace('.', '_'), '') == 'SUCCESS' %}
-            <font color="green">PASS
-          {% elif image.get('tests', {}).get(test.replace('.', '_'), '') == 'IN PROGRESS' %}
-            <font color="orange">IN PROGRESS
-          {% else %}
-            <font color="red">
-              {% if image.get('tests', {}).get(test.replace('.', '_'), '') == 'FAILURE' %}
-                FAIL
+          {% if 'cachers' not in test %}
+              <td> <b> <center>
+              {% if image.get('tests', {}).get(test.replace('.', '_'), '') == 'SUCCESS' %}
+                <font color="green">PASS
+              {% elif image.get('tests', {}).get(test.replace('.', '_'), '') == 'IN PROGRESS' %}
+                <font color="orange">IN PROGRESS
               {% else %}
-                {{ image.get('tests', {}).get(test.replace('.', '_'), '') }}
+                <font color="red">
+                  {% if image.get('tests', {}).get(test.replace('.', '_'), '') == 'FAILURE' %}
+                    FAIL
+                  {% else %}
+                    {{ image.get('tests', {}).get(test.replace('.', '_'), '') }}
+                  {% endif %}
               {% endif %}
-          {% endif %}
-          </font> </center> </b> </td>
+              </font> </center> </b> </td>
+           {% endif %}
         {% endfor %}
         <td>
           <a href="{{ image.get('iso_link', '') }}">ISO</a> &nbsp;
