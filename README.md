@@ -20,11 +20,15 @@ To deploy this application on the new environment we
 first of all need to install the requirements:
 
 > // in Ubuntu:
+
 > apt-get install -y mongodb python python-pip
+
 > pip install pymongo jenkinsapi
 
 > // in CentOS:
+
 > yum install -y mongodb python python-pip                                  
+
 > pip install pymongo jenkinsapi
 
 After the reqirements installation we can execute script which will
