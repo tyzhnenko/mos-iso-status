@@ -15,6 +15,7 @@ def mos_images_status(version):
     data = list(mos.images.find())[0]
     tests_types = data.get(ver, {}).get('test_groups', [])
     images = data.get(ver, {}).get('builds', [])
+    images.reverse()
 
     return flask.render_template("iso_status.html", version=version,
                                  images=images, tests_types=tests_types)
