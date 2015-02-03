@@ -1,0 +1,23 @@
+{% block body %}
+
+<header> MOS Images Status </header>
+
+<style>
+ table, td, th {
+    border: 1px solid black;
+ }
+ th {
+    background-color: #D0D0D0;
+    color: black;
+    padding: 1px;
+ }
+</style>
+
+<H1> MOS images status reports: </H1>
+
+{% for version in versions %}
+    <p> <a href="mos/{{ version }}"> MOS {{ version }} ISO status </a> </p>
+{% endfor %}
+
+
+{% endblock %}

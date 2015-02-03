@@ -6,6 +6,19 @@ import pymongo
 app = flask.Flask(__name__)
 
 
+@app.route('/')
+def index_page():
+    connection = pymongo.Connection()
+    mos = connection['MOS']
+    data = list(mos.images.find())[0]
+    all_versions = []
+
+    for k in data:
+        if '_id' not in k:
+            all_versions.append(k.replace('_', '.'))
+
+    return flask.render_template("index.html", versions=all_versions)
+
 @app.route('/mos/<version>')
 def mos_images_status(version):
     ver = version.replace('.', '_')
