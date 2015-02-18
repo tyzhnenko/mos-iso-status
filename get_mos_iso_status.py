@@ -6,7 +6,7 @@ from jenkinsapi import api
 
 FUEL_URL = 'http://jenkins-product.srt.mirantis.net:8080/'
 FUEL_RELEASES = ['6.1', '6.0', '6.0.1']
-N = 3  # script will update only last N+1 results
+N = 58  # script will update only last N+1 results
 
 jenkins = Jenkins(FUEL_URL, username=None, password=None)
 connection = pymongo.Connection()                                               
@@ -44,6 +44,7 @@ for release in FUEL_RELEASES:
             build = jenkins_job.get_build(n)
             date = str(build.get_timestamp()).split('+')[0]
             status = build.get_status() or 'IN PROGRESS'
+            url = build.get_result_url()
 
             iso_link, torrent_link = '', ''
 
@@ -59,6 +60,7 @@ for release in FUEL_RELEASES:
             RESULTS[fjob_name]['builds'].append({'build_number': n,
                                                  'build_status': status,
                                                  'tests': {}, 'date': date,
+                                                 'url': url,
                                                  'iso_link': iso_link,
                                                  'torrent_link': torrent_link})
 

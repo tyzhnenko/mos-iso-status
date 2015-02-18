@@ -34,6 +34,9 @@
         <td> <center> {{ image.get('build_number', '') }} </center> </td>
         <td>{{ image.get('date', '') }}</td>
         <td> <b> <center>
+
+        <a href="{{ image.get('url', '')[:-21] }}">
+
         {% if image.get('build_status', '') == 'SUCCESS' %}
            <font color="green"> PASS
         {% elif image.get('build_status', '') == 'IN PROGRESS' %}
@@ -46,12 +49,12 @@
                {{ image.get('build_status', '') }}
              {% endif %}
         {% endif %}
-        </font> </center> </b> </td>
+        </font> </a> </center> </b> </td>
         {% for test in tests_types %}
           {% if 'cachers' not in test %}
               <td> <b> <center>
 
-              <a href="{{ image.get('tests', {}).get(test.replace('.', '_'), {}).get('url', '')[:-21] }}">
+              <a href="{{ image.get('tests', {}).get(test.replace('.', '_'), {}).get('url', '')[:21] }}">
 
               {% if image.get('tests', {}).get(test.replace('.', '_'), {}).get('status', '') == 'SUCCESS' %}
                 <font color="green">PASS
