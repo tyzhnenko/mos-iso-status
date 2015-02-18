@@ -5,8 +5,8 @@ from jenkinsapi import api
 
 
 FUEL_URL = 'http://jenkins-product.srt.mirantis.net:8080/'
-FUEL_RELEASES = ['6.0', '6.1']
-N = 10  # script will update only last N+1 results
+FUEL_RELEASES = ['6.1', ]
+N = 3  # script will update only last N+1 results
 
 jenkins = Jenkins(FUEL_URL, username=None, password=None)
 connection = pymongo.Connection()                                               
@@ -68,7 +68,7 @@ for release in FUEL_RELEASES:
     for test in RESULTS[fjob_name]['test_groups']:
         test_job = jenkins[test]
         latest_test_build = test_job.get_last_buildnumber()
-        for j in xrange(latest_test_build - N, latest_test_build + 1):
+        for j in xrange(latest_test_build - N*5, latest_test_build + 1):
             try:
                 build = test_job.get_build(j)
                 r = build.get_upstream_build_number()

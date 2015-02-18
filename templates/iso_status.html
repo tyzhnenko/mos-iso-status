@@ -54,6 +54,8 @@
                 <font color="green">PASS
               {% elif image.get('tests', {}).get(test.replace('.', '_'), '') == 'IN PROGRESS' %}
                 <font color="orange">IN PROGRESS
+              {% elif image.get('tests', {}).get(test.replace('.', '_'), '') == '' %}
+                <font color="black">NOT EXECUTED
               {% else %}
                 <font color="red">
                   {% if image.get('tests', {}).get(test.replace('.', '_'), '') == 'FAILURE' %}
