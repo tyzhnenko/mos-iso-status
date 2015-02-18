@@ -6,7 +6,7 @@ from jenkinsapi import api
 
 FUEL_URL = 'http://jenkins-product.srt.mirantis.net:8080/'
 FUEL_RELEASES = ['6.1', '6.0', '6.0.1']
-N = 58  # script will update only last N+1 results
+N = 3  # script will update only last N+1 results
 
 jenkins = Jenkins(FUEL_URL, username=None, password=None)
 connection = pymongo.Connection()                                               
@@ -14,7 +14,7 @@ mos = connection['MOS']
 
 images = list(mos.images.find())
 if len(images) > 0:
-    OLD_RESULTS = {} #images[0]
+    OLD_RESULTS = images[0]
 
 RESULTS = {}
 
