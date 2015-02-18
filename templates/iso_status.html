@@ -50,21 +50,25 @@
         {% for test in tests_types %}
           {% if 'cachers' not in test %}
               <td> <b> <center>
-              {% if image.get('tests', {}).get(test.replace('.', '_'), '') == 'SUCCESS' %}
+
+              <a href="{{ image.get('tests', {}).get(test.replace('.', '_'), {}).get('url', '')[:-21] }}">
+
+              {% if image.get('tests', {}).get(test.replace('.', '_'), {}).get('status', '') == 'SUCCESS' %}
                 <font color="green">PASS
-              {% elif image.get('tests', {}).get(test.replace('.', '_'), '') == 'IN PROGRESS' %}
+              {% elif image.get('tests', {}).get(test.replace('.', '_'), {}).get('status', '') == 'IN PROGRESS' %}
                 <font color="orange">IN PROGRESS
-              {% elif image.get('tests', {}).get(test.replace('.', '_'), '') == '' %}
+              {% elif image.get('tests', {}).get(test.replace('.', '_'), {}).get('status', '') == '' %}
                 <font color="black">NOT EXECUTED
               {% else %}
                 <font color="red">
-                  {% if image.get('tests', {}).get(test.replace('.', '_'), '') == 'FAILURE' %}
+                  {% if image.get('tests', {}).get(test.replace('.', '_'), {}).get('status', '') == 'FAILURE' %}
                     FAIL
                   {% else %}
-                    {{ image.get('tests', {}).get(test.replace('.', '_'), '') }}
+                    {{ image.get('tests', {}).get(test.replace('.', '_'), {}).get('status', '') }}
                   {% endif %}
               {% endif %}
-              </font> </center> </b> </td>
+
+              </font></a> </center> </b> </td>
            {% endif %}
         {% endfor %}
         <td>
