@@ -76,7 +76,8 @@
         {% endfor %}
         <td>
           <a href="{{ image.get('iso_link', '') }}">ISO</a> &nbsp;
-          <a href="{{ image.get('torrent_link', '') }}">Torrent</a>
+          <a href="{{ image.get('torrent_link', '') }}">Torrent</a> &nbsp;
+          <a href="{{ image.get('magnet_link', '') }}">Magnet</a>
         </td>
       </tr>
   {% endfor %}

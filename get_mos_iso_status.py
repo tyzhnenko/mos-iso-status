@@ -15,7 +15,8 @@ mos = connection['MOS']
 images = list(mos.images.find())
 if len(images) > 0:
     OLD_RESULTS = images[0]
-
+else:
+    OLD_RESULTS = {}
 RESULTS = {}
 
 
@@ -46,7 +47,7 @@ for release in FUEL_RELEASES:
             status = build.get_status() or 'IN PROGRESS'
             url = build.get_result_url()
 
-            iso_link, torrent_link = '', ''
+            iso_link, torrent_link, magnet_link = '', '', ''
 
             for art in build.get_artifacts():
                 if 'iso.data.txt' in art.url:
@@ -56,13 +57,16 @@ for release in FUEL_RELEASES:
                             iso_link = line.split('=')[1]
                         elif 'HTTP_TORRENT' in line:
                             torrent_link = line.split('=')[1]
+                        elif 'MAGNET_LINK' in line:
+                            magnet_link = line.split('=', 1)[1]
 
             RESULTS[fjob_name]['builds'].append({'build_number': n,
                                                  'build_status': status,
                                                  'tests': {}, 'date': date,
                                                  'url': url,
                                                  'iso_link': iso_link,
-                                                 'torrent_link': torrent_link})
+                                                 'torrent_link': torrent_link,
+                                                 'magnet_link': magnet_link})
 
             print "Synced results from iso build job", n
         except:
